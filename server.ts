@@ -24,7 +24,16 @@ app.post("/", async (req: Request, res: Response) => {
   res.json({ joke });
 });
 
-app.get("/:joke_id", (req: Request, res: Response) => {});
+app.get("/:joke_id", async (req: Request, res: Response) => {
+  const { joke_id } = req.params;
+
+  const joke = await prisma.joke.findUnique({
+    where: {
+      id: joke_id,
+    }
+  });
+  res.json({ joke })
+});
 
 app.delete("/:joke_id", (req: Request, res: Response) => {});
 
