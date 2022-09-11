@@ -50,6 +50,16 @@ app.put("/:joke_id", async (req: Request, res: Response) => {
   res.json({ joke });
 });
 
-app.delete("/:joke_id", (req: Request, res: Response) => {});
+app.delete("/:joke_id", async (req: Request, res: Response) => {
+  const { joke_id } = req.params;
+
+  const joke = await prisma.joke.delete({
+    where: {
+      id: joke_id,
+    },
+  });
+
+  res.json({ message: "Joke deleted successfully!" });
+});
 
 app.listen(3001);
