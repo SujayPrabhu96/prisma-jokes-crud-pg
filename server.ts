@@ -35,6 +35,21 @@ app.get("/:joke_id", async (req: Request, res: Response) => {
   res.json({ joke });
 });
 
+app.put("/:joke_id", async (req: Request, res: Response) => {
+  const { joke_id } = req.params;
+  const { text } = req.body;
+
+  const joke = await prisma.joke.update({
+    where: {
+      id: joke_id,
+    },
+    data: {
+      text,
+    },
+  });
+  res.json({ joke });
+});
+
 app.delete("/:joke_id", (req: Request, res: Response) => {});
 
 app.listen(3001);
